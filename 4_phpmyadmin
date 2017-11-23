@@ -1,0 +1,5 @@
+ Configuration de phpmyadmin 
+  Faut-il configurer la base de données de phpmyadmin avec dbconfig-common ?  ::oui
+   Mot de passe de connexion MySQL pour phpmyadmin ::   root
+   confirm::root
+   │ Serveur web à reconfigurer automatiquement : apache2
