@@ -1,0 +1,7 @@
+apt-get upgrade
+apt-get update
+apt-get install php
+apt-get install php-fpm
+apt-get install php-imap
+apt-get install php-mycrypt
+apt-get install php-intl
