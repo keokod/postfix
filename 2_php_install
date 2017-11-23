@@ -1,7 +1,10 @@
-apt-get upgrade
 apt-get update
+apt-get upgrade
 apt-get install php
 apt-get install php-fpm
 apt-get install php-imap
-apt-get install php-mycrypt
+apt-get install php-mcrypt
 apt-get install php-intl
+apt-get install openssl
+apt-get install ssl-cert
+apt-get install apache2
