@@ -1,0 +1,8 @@
+mysql_virtual_mailbox_domains.cf     
+hosts = 127.0.0.1
+user = postfixadmin
+password = root     
+dbname = postfixadmin
+query = SELECT domain FROM domain WHERE domain='%s' and backupmx = 0 and active = 1
+
+# test connection:
