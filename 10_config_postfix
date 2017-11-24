@@ -5,4 +5,15 @@ password = root
 dbname = postfixadmin
 query = SELECT domain FROM domain WHERE domain='%s' and backupmx = 0 and active = 1
 
-# test connection:
+# test connexion:
+mysql -u postfixadmin -p
+Enter password: root
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 2
+Server version: 10.1.26-MariaDB-0+deb9u1 Debian 9.1
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
