@@ -1,7 +1,7 @@
 echo "pandan" > /etc/hostname #nom du serveur
 
 127.0.0.1 localhost.localdomain localhost
-192.168.1.99 pandan.stackod.com pandan
+192.168.1.2 pandan.stackod.com pandan
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback
@@ -9,4 +9,30 @@ ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
 192.168.1.99 pandan.stackod.com pandan
+
+#configurer comme ceci le DNS
+stackod.com.	0	MX	1 pandan 	
+	
+stackod.com.	0	A	votre_ip_public	
+	
+imap.stackod.com.	0	A	votre_ip_public	
+	
+mail.stackod.com. 0	A	votre_ip_public
+	
+smtp.stackod.com. 0	A	votre_ip_public	
+	
+ftp.stackod.com. 	0	CNAME	stackod.com. 	
+	
+imap.stackod.com.	0	CNAME	pandan 	
+	
+smtp.stackod.com.	0	CNAME	pandan
+
+#Vérification:
+
+host -t MX stackod.com
+stackod.com mail is handled by 1 pandan.stackod.com.
+
+ping smtp.stackod.com
+PING smtp.stackod.com (votre_ip_public) 56(84) bytes of data.
+64 bytes from vln78-h01-votre_ip_public.dsl.sta.abo.bbox.fr (votre_ip_public): icmp_seq=1 ttl=64 time=4.33 ms
 
