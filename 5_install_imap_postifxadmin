@@ -1,4 +1,30 @@
 
+ $ mysql -u root -p
+Enter password: 
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 37
+Server version: 10.1.26-MariaDB-0+deb9u1 Debian 9.1
+
+Copyright (c) 2000, 2017, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+MariaDB [(none)]> CREATE USER 'postfixadmin'@'localhost' IDENTIFIED BY 'root';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> GRANT ALL ON postfixadmin.* TO 'postfixadmin'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+MariaDB [(none)]> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.00 sec)
+
+//install postfixadmin
 apt-get install postfixadmin
 Postfix Configuration ::  Site Internet  
 Postfix Configuration :: stackod.com
+ │ Faut-il configurer la base de données de postfixadmin avec                │ 
+ │ dbconfig-common ?  :: oui
+  Mot de passe de connexion MySQL pour postfixadmin : root
+   │ Méthode de connexion pour la base de données MySQL de postfixadmin:: scoket unix
+   Identifiant MySQL pour postfixadmin :: postfixadmin@localhost
+   Nom de la base de données MySQL pour postfixadmin : postfixadmin
+   
