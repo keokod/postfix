@@ -38,3 +38,31 @@ ssl = yes #mettre ssl à yes
 #editer
 20-imap.conf  
   mail_max_userip_connections = 10 #decommenter
+  
+#editer
+auth-sql.conf.ext
+# Authentication for SQL users. Included from 10-auth.conf.
+#
+# <doc/wiki/AuthDatabase.SQL.txt>
+
+passdb {
+  driver = sql
+
+  # Path for SQL configuration file, see example-config/dovecot-sql.conf.ext
+  args = /etc/dovecot/dovecot-mysql.conf.ext #ajouter my
+}
+
+# "prefetch" user database means that the passdb already provided the
+# needed information and there's no need to do a separate userdb lookup.
+# <doc/wiki/UserDatabase.Prefetch.txt>
+#userdb {
+#  driver = prefetch
+#}
+
+userdb {
+  driver = sql
+  args = /etc/dovecot/dovecot-mysql.conf.ext #ajouter my
+}
+
+
+
