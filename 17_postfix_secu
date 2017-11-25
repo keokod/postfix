@@ -16,6 +16,36 @@ nov. 25 10:51:58 pandan systemd[1]: Started Postfix Mail Transport Agent.
 #installer
 apt-get install clamav-milter clamav-unofficial-sigs postgrey spamass-milter
 
+#reconfigurer clamav-milter
+dpkg -i reconfigure clamav-milter
+/var/spool/postfix# dpkg-reconfigure clamav-milter
+
+=>Configuration de clamav-milter 
+Faut-il gérer le fichier de configuration automatiquement ?    oui
+Identifiant qui exécutera clamav-milter :   clamav
+Groupes de clamav-milter (séparés par des espaces) :  
+ Interface de communication avec Sendmail :  /var/spool/postfix/clamav/clamav-milter.ctl
+  Autorisations du fichier « socket » de clamav-milter : 660
+ Faut-il supprimer la « socket » résiduelle après un arrêt brutal ? yes
+ │ Délai d'expiration pour les données provenant de clamd : 120
+  Faut-il interdire à clamav-milter de créer des processus fils (« fork ») ? no
+   Répertoire de l'environnement d'exécution sécurisé :  vide
+   Fichier PID : /var/run/clamav/clamav-milter.pid
+   
+   Chemin des répertoires temporaires : /tmp
+   « Socket » de clamd à utiliser pour le traitement :   unix:/var/run/clamav/clamd.ctl
+  Hôtes à exclure de la vérification :
+   Liste blanche d'adresses de courriel :   
+    Action à réaliser pour un courriel « infecté » :     reject
+      │ Action à réaliser en cas d'erreur :   deffer
+        │ Motif de rejet des courriels infectés :│ Rejected: %v found
+        Faut-il ajouter des en-têtes aux courriels vérifiés ?  remplacé
+          │ Fichier de journal de clamav-milter :  /var/log/clamav/clamav-milter.log____
+          │ Taille maximale (en Mo) du fichier de journal :  1000
+          Faut-il ajouter des informations temporelles dans le fichier de journal pour chaque courriel ?  
+          
+          
+ 
 #test status clamav
 systemctl status clamav-freshclam.service
 ● clamav-freshclam.service - ClamAV virus database updater
