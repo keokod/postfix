@@ -118,9 +118,70 @@ CRON=1
 
 #editer local.cf
 /etc/spamassassin# nano local.cf 
-report_safe 1
+rewrite_header Subject *****SPAM*****
+required_score 3.0
+report_safe 0
 use_bayes 1
+bayes_auto_learn 1
 
+
+apt-get install spamc
+Lecture des listes de paquets... Fait
+Construction de l'arbre des dépendances       
+Lecture des informations d'état... Fait
+spamc is already the newest version (3.4.1-6+b1).
+spamc passé en « installé manuellement ».
+0 mis à jour, 0 nouvellement installés, 0 à enlever et 3 non mis à jour.
+
+#editer
+/etc/spamassassin# nano spamc.conf
+
+-U /var/spool/postfix/spamass/spamsass.sock
+-u spamass-milter
+
+-s 350000
+
+#redémarer
+systemctl restart spamassassin
+
+# groupadd -g 5555 spamd
+# useradd -u 5555 -g spamd -s /sbin/nologin -d /usr/local/spamassassin spamd
+# mkdir -p /usr/local/spamassassin/log
+# chown spamd:spamd -R /usr/local/spamassassin
+
+#editer
+/etc/postfix/master.cf
+smtp      inet  n       -       -       -       -       smtpd
+smtp 	inet  n 	-	-	-	- 	smtpd -o content_filter=spamassassin
+spamassassin unix - n n - - pipe
+  user=spamd argv=/usr/bin/spamc -f -e /usr/sbin/sendmail -oi -f ${sender} ${recipient}
+  # service spamassassin restart
+# service postfix restart
+
+#on doit avoir ceci :
+restart spamass-milter
+root@pandan:/usr/local# systemctl status spamassassin -l
+● spamassassin.service - Perl-based spam filter using text analysis
+   Loaded: loaded (/lib/systemd/system/spamassassin.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2017-11-25 20:45:42 CET; 8min ago
+  Process: 2015 ExecStart=/usr/sbin/spamd -d --pidfile=/var/run/spamassassin.pid $OPTIONS (code=exited, status=0/SUCCESS)
+ Main PID: 2017 (/usr/sbin/spamd)
+    Tasks: 3 (limit: 4915)
+   CGroup: /system.slice/spamassassin.service
+           ├─2017 /usr/sbin/spamd -d --pidfile=/var/run/spamassassin.pid --create-prefs --max-children 5 --helper-home-dir=/var/lig/spamassassin -u spamd -g spamd
+           ├─2018 spamd child
+           └─2019 spamd child
+
+nov. 25 20:45:40 pandan systemd[1]: Starting Perl-based spam filter using text analysis...
+nov. 25 20:45:40 pandan spamd[2015]: logger: removing stderr method
+nov. 25 20:45:41 pandan spamd[2017]: zoom: able to use 353/353 'body_0' compiled rules (100%)
+nov. 25 20:45:42 pandan spamd[2017]: spamd: server started on IO::Socket::IP [::1]:783, IO::Socket::IP [127.0.0.1]:783 (running version 3.4.1)
+nov. 25 20:45:42 pandan spamd[2017]: spamd: server pid: 2017
+nov. 25 20:45:42 pandan spamd[2017]: spamd: server successfully spawned child process, pid 2018
+nov. 25 20:45:42 pandan spamd[2017]: spamd: server successfully spawned child process, pid 2019
+nov. 25 20:45:42 pandan systemd[1]: Started Perl-based spam filter using text analysis.
+nov. 25 20:45:42 pandan spamd[2017]: prefork: child states: IS
+nov. 25 20:45:42 pandan spamd[2017]: prefork: child states: II
 
 
 
@@ -136,6 +197,23 @@ systemctl status clamav-freshclam.service
  Main PID: 7558 (freshclam)
    CGroup: /system.slice/clamav-freshclam.service
            └─7558 /usr/bin/freshclam -d --foreground=true
+           
+           systemctl restart postfix
+root@pandan:/usr/local# systemctl status postfix -l
+● postfix.service - Postfix Mail Transport Agent
+   Loaded: loaded (/lib/systemd/system/postfix.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Sat 2017-11-25 20:56:54 CET; 20s ago
+  Process: 2385 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+ Main PID: 2385 (code=exited, status=0/SUCCESS)
+
+nov. 25 20:56:54 pandan systemd[1]: Starting Postfix Mail Transport Agent...
+nov. 25 20:56:54 pandan systemd[1]: Started Postfix Mail Transport Agent.
+
+
+
+
+         
+           
 
 nov. 25 11:20:48 pandan systemd[1]: Started ClamAV virus database updater.
 nov. 25 11:20:48 pandan freshclam[7558]: ClamAV update process started at Sat Nov 25 11:20:48 2017
