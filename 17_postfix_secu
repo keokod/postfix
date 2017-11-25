@@ -43,8 +43,18 @@ Groupes de clamav-milter (séparés par des espaces) :
           │ Fichier de journal de clamav-milter :  /var/log/clamav/clamav-milter.log____
           │ Taille maximale (en Mo) du fichier de journal :  1000
           Faut-il ajouter des informations temporelles dans le fichier de journal pour chaque courriel ?  
-          
-          
+│ Faut-il ajouter des informations temporelles dans le fichier de journal pour chaque courriel ?yes
+ Faut-il utiliser le système de journalisation syslog ?   no
+  Type des messages syslog : log6
+  
+   │ Faut-il activer la journalisation bavarde ?  yes
+     Niveau d'information à journaliser pour les messages infectés :        désacitvé
+  Niveau d'information à journaliser en l'absence d'alerte :       
+  Taille maximale (en Mo) des fichiers à vérifier :   25
+  Voulez-vous que clamav-milter gère plusieurs destinataires ?    no
+  Souhaitez-vous activer la rotation des journaux ?  │ yes
+  
+  
  
 #test status clamav
 systemctl status clamav-freshclam.service
