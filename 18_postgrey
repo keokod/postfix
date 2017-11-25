@@ -1,0 +1,48 @@
+sa-update
+#editer
+/etc/default/postgrey   
+# postgrey startup options, created for Debian
+
+# you may want to set
+#   --delay=N   how long to greylist, seconds (default: 300)
+#   --max-age=N delete old entries after N days (default: 35)
+# see also the postgrey(8) manpage
+
+POSTGREY_OPTS="--unix=/var/spool/postfix/postgrey/socket --delay=60"
+
+# the --greylist-text commandline argument can not be easily passed through
+# POSTGREY_OPTS when it contains spaces.  So, insert your text here:
+#POSTGREY_TEXT="Your customized rejection message here"
+
+
+
+restart postgrey
+/usr/local# systemctl status postgrey
+● postgrey.service - LSB: Start/stop the postgrey daemon
+   Loaded: loaded (/etc/init.d/postgrey; generated; vendor preset: enabled)
+   Active: active (exited) since Sat 2017-11-25 21:06:57 CET; 4s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 2433 ExecStop=/etc/init.d/postgrey stop (code=exited, status=0/SUCCESS)
+  Process: 2442 ExecStart=/etc/init.d/postgrey start (code=exited, status=0/SUCCESS)
+
+nov. 25 21:06:57 pandan systemd[1]: Starting LSB: Start/stop the postgrey daemon...
+nov. 25 21:06:57 pandan postgrey[2447]: Process Backgrounded
+nov. 25 21:06:57 pandan postgrey[2447]: 2017/11/25-21:06:57 postgrey (type Net::Server::Multiplex) starting! pid(2447)
+nov. 25 21:06:57 pandan postgrey[2442]: Starting postfix greylisting daemon: postgrey.
+nov. 25 21:06:57 pandan systemd[1]: Started LSB: Start/stop the postgrey daemon.
+nov. 25 21:06:57 pandan postgrey[2447]: Binding to UNIX socket file "/var/spool/postfix/postgrey/socket"
+
+restart postfix
+/usr/local# systemctl status postfix -l
+● postfix.service - Postfix Mail Transport Agent
+   Loaded: loaded (/lib/systemd/system/postfix.service; enabled; vendor preset: enabled)
+   Active: active (exited) since Sat 2017-11-25 21:08:09 CET; 6s ago
+  Process: 2647 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+ Main PID: 2647 (code=exited, status=0/SUCCESS)
+
+nov. 25 21:08:09 pandan systemd[1]: Starting Postfix Mail Transport Agent...
+nov. 25 21:08:09 pandan systemd[1]: Started Postfix Mail Transport Agent.
+
+
+
+
