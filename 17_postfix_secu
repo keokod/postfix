@@ -1,0 +1,43 @@
+#test status
+ systemctl restart postfix.service
+
+systemctl status postfix.service -l
+● postfix.service - Postfix Mail Transport Agent
+   Loaded: loaded (/lib/systemd/system/postfix.service; enabled; vendor preset: 
+   Active: active (exited) since Sat 2017-11-25 10:51:58 CET; 7min ago
+  Process: 1196 ExecStart=/bin/true (code=exited, status=0/SUCCESS)
+ Main PID: 1196 (code=exited, status=0/SUCCESS)
+    Tasks: 0 (limit: 4915)
+   CGroup: /system.slice/postfix.service
+
+nov. 25 10:51:57 pandan systemd[1]: Starting Postfix Mail Transport Agent...
+nov. 25 10:51:58 pandan systemd[1]: Started Postfix Mail Transport Agent.
+
+#installer
+apt-get install clamav-milter clamav-unofficial-sigs postgrey spamass-milter
+
+#test status clamav
+systemctl status clamav-freshclam.service
+● clamav-freshclam.service - ClamAV virus database updater
+   Loaded: loaded (/lib/systemd/system/clamav-freshclam.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2017-11-25 11:20:48 CET; 4min 8s ago
+     Docs: man:freshclam(1)
+           man:freshclam.conf(5)
+           http://www.clamav.net/lang/en/doc/
+ Main PID: 7558 (freshclam)
+   CGroup: /system.slice/clamav-freshclam.service
+           └─7558 /usr/bin/freshclam -d --foreground=true
+
+nov. 25 11:20:48 pandan systemd[1]: Started ClamAV virus database updater.
+nov. 25 11:20:48 pandan freshclam[7558]: ClamAV update process started at Sat Nov 25 11:20:48 2017
+nov. 25 11:22:25 pandan freshclam[7558]: Downloading main.cvd [100%]
+nov. 25 11:22:32 pandan freshclam[7558]: main.cvd updated (version: 58, sigs: 4566249, f-level: 60, builder: sigmgr)
+nov. 25 11:23:04 pandan freshclam[7558]: Downloading daily.cvd [100%]
+nov. 25 11:23:07 pandan freshclam[7558]: daily.cvd updated (version: 24072, sigs: 1788909, f-level: 63, builder: neo)
+nov. 25 11:23:08 pandan freshclam[7558]: Downloading bytecode.cvd [100%]
+nov. 25 11:23:09 pandan freshclam[7558]: bytecode.cvd updated (version: 318, sigs: 75, f-level: 63, builder: raynman)
+nov. 25 11:23:12 pandan freshclam[7558]: Database updated (6355233 signatures) from db.local.clamav.net (IP: 130.59.113.36)
+nov. 25 11:23:12 pandan freshclam[7558]: WARNING: Clamd was NOT notified: Can't connect to clamd through /var/run/clamav/clamd.ctl: No such file or directory
+root@pandan:/home/aker# 
+
+
