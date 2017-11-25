@@ -1,0 +1,72 @@
+#vérifier la base postfix:
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| postfixadmin       |
++--------------------+
+
+vérifier que les tables :
+show tables;
++------------------------+
+| Tables_in_postfixadmin |
++------------------------+
+| admin                  |
+| alias                  |
+| alias_domain           |
+| config                 |
+| domain                 |
+| domain_admins          |
+| fetchmail              |
+| log                    |
+| mailbox                |
+| quota                  |
+| quota2                 |
+| vacation               |
+| vacation_notification  |
++------------------------+
+
+#a cette page (bas de page):
+https://localhost/postfixadmin/setup.php
+
+Change setup password
+Setup password : root00
+Setup password (again): root00
+
+#cliquer sur generate hash
+# récupérer le hash:
+If you want to use the password you entered as setup password, edit config.inc.php or config.local.php and set
+
+$CONF['setup_password'] = '617501ed3687f5414bc813efb5d5717c:a52bfa8ec33d47868f3b0cd7b5315259c27a5b58';
+
+/usr/share/postfixadmin# nano config.inc.php
+
+#créer un superadmin pour postfixadmin
+
+Create superadmin account
+Setup password 		root00
+Admin: 		admin@stackod.com
+Password: 		root00
+Password (again): root00		
+
+
+The admin root@stackod.com has been added!
+
+You are done with your basic setup.
+
+You can now login to PostfixAdmin using the account you just created.
+
+#se connecter 
+https://localhost/postfixadmin/login.php
+
+Mail admins login here to administer your domain.
+Login (email): 	root@stackod.com  
+Password: 	root00
+
+#on s'est connecté:
+https://localhost/postfixadmin/main.php
+
