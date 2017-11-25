@@ -1,0 +1,44 @@
+a2ensite default-ssl.conf 
+Enabling site default-ssl.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+#supprimer site-enabled 000-defaut.conf 
+
+nano ports.conf
+#retirer ecoute port 80
+
+#activer module ssl
+ a2enmod ssl
+ Considering dependency setenvif for ssl:
+Module setenvif already enabled
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Enabling module socache_shmcb.
+Enabling module ssl.
+See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+  
+ systemctl restart apache2
+ 
+   systemctl status apache2
+● apache2.service - The Apache HTTP Server
+   Loaded: loaded (/lib/systemd/system/apache2.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2017-11-25 01:56:07 CET; 28s ago
+  Process: 3726 ExecStop=/usr/sbin/apachectl stop (code=exited, status=0/SUCCESS)
+  Process: 3733 ExecStart=/usr/sbin/apachectl start (code=exited, status=0/SUCCESS)
+ Main PID: 3737 (apache2)
+    Tasks: 6 (limit: 4915)
+   CGroup: /system.slice/apache2.service
+           ├─3737 /usr/sbin/apache2 -k start
+           ├─3738 /usr/sbin/apache2 -k start
+           ├─3739 /usr/sbin/apache2 -k start
+           ├─3740 /usr/sbin/apache2 -k start
+           ├─3741 /usr/sbin/apache2 -k start
+           └─3742 /usr/sbin/apache2 -k start
+
+nov. 25 01:56:07 pandan systemd[1]: Starting The Apache HTTP Server...
+nov. 25 01:56:07 pandan systemd[1]: Started The Apache HTTP Server.
+
+
