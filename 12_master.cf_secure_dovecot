@@ -34,3 +34,7 @@ mail_location = maildir:/home/vmail/%d/%n:INDEX=/home/vmail/%d/%n/indexes
 #editer
 nano 10-ssl.conf 
 ssl = yes #mettre ssl à yes
+
+#editer
+20-imap.conf  
+  mail_max_userip_connections = 10 #decommenter
