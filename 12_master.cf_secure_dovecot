@@ -1,0 +1,10 @@
+adduser postfix sasl
+groups postfix
+postfix : postfix sasl
+
+#editer ce fichier
+nano /etc/postfix/master.cf
+
+#install dovecot
+apt-get install dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-lmtpd
+
