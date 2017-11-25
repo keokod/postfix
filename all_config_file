@@ -972,3 +972,39 @@ LogFileMaxSize 0
 MilterSocketGroup clamav
 MilterSocketMode 660
 #!----------------/etc/clamav/clamav-milter.conf--
+
+#editer ce fichier avec juste cette ligne
+/etc/default# nano clamav-milter
+SOCKET_RWGROUP=postfix
+
+#creer ce dossier
+/var/spool/postfix# mkdir clamav
+
+#donner les droits
+/var/spool/postfix# chown clamav clamav
+
+#modifier à la fin du fichier
+/etc/default# nano spamass-milter 
+######################################
+ SOCKET="/var/spool/postfix/spamass/spamass.sock"
+ SOCKETOWNER="spamass-milter:postfix"
+ SOCKETMODE="0660"
+######################################
+
+#verifier ce dossier
+
+/var/spool/postfix/spamass# ls -la
+total 8
+drwxr-xr-x  2 spamass-milter root    4096 nov.  25 11:20 .
+drwxr-xr-x 22 root           root    4096 nov.  25 11:34 ..
+srw-rw----  1 postfix        postfix    0 nov.  25 11:20 spamass.sock
+
+
+
+
+
+
+
+
+
+
