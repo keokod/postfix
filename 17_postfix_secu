@@ -54,7 +54,76 @@ Groupes de clamav-milter (séparés par des espaces) :
   Voulez-vous que clamav-milter gère plusieurs destinataires ?    no
   Souhaitez-vous activer la rotation des journaux ?  │ yes
   
+  #redémarer postfix service
+  systemctl restart postfix.service
   
+  #redémarrer spa
+  systemctl restart spamass-milter
+  
+  #test le service
+   systemctl status spamass-milter -l
+● spamass-milter.service - LSB: milter for spamassassin
+   Loaded: loaded (/etc/init.d/spamass-milter; generated; vendor preset: enabled)
+   Active: active (running) since Sat 2017-11-25 13:22:08 CET; 57s ago
+     Docs: man:systemd-sysv-generator(8)
+  Process: 12236 ExecStop=/etc/init.d/spamass-milter stop (code=exited, status=0/SUCCESS)
+  Process: 12242 ExecStart=/etc/init.d/spamass-milter start (code=exited, status=0/SUCCESS)
+    Tasks: 5 (limit: 4915)
+   CGroup: /system.slice/spamass-milter.service
+           └─12256 /usr/sbin/spamass-milter -P /var/run/spamass/spamass.pid -f -p /var/spool/postfix/spamass/spamass.sock -r -1
+
+nov. 25 13:22:07 pandan systemd[1]: Starting LSB: milter for spamassassin...
+nov. 25 13:22:07 pandan spamass-milter[12256]: spamass-milter 0.4.0 starting
+nov. 25 13:22:08 pandan spamass-milter[12242]: Starting Sendmail milter plugin for SpamAssassin: spamass-milter
+nov. 25 13:22:08 pandan systemd[1]: Started LSB: milter for spamassassin.
+
+#editer
+/etc/default# nano spamassassin 
+
+# /etc/default/spamassassin
+# Duncan Findlay
+
+# WARNING: please read README.spamd before using.
+# There may be security risks.
+
+# If you're using systemd (default for jessie), the ENABLED setting is
+# not used. Instead, enable spamd by issuing:
+# systemctl enable spamassassin.service
+# Change to "1" to enable spamd on systems using sysvinit:
+ENABLED=1
+
+# Options
+# See man spamd for possible options. The -d option is automatically added.
+
+# SpamAssassin uses a preforking model, so be careful! You need to
+# make sure --max-children is not set to anything higher than 5,
+# unless you know what you're doing.
+
+OPTIONS="--create-prefs --max-children 5 --helper-home-dir=/var/lig/spamassassin -u spamd -g spamd"
+
+# Pid file
+# Where should spamd write its PID to file? If you use the -u or
+# --username option above, this needs to be writable by that user.
+# Otherwise, the init script will not be able to shut spamd down.
+PIDFILE="/var/run/spamd.pid"
+
+# Set nice level of spamd
+#NICE="--nicelevel 15"
+
+# Cronjob
+# Set to anything but 0 to enable the cron job to automatically update
+# spamassassin's rules on a nightly basis
+CRON=1
+
+
+#editer local.cf
+/etc/spamassassin# nano local.cf 
+report_safe 1
+use_bayes 1
+
+
+
+
  
 #test status clamav
 systemctl status clamav-freshclam.service
@@ -78,6 +147,6 @@ nov. 25 11:23:08 pandan freshclam[7558]: Downloading bytecode.cvd [100%]
 nov. 25 11:23:09 pandan freshclam[7558]: bytecode.cvd updated (version: 318, sigs: 75, f-level: 63, builder: raynman)
 nov. 25 11:23:12 pandan freshclam[7558]: Database updated (6355233 signatures) from db.local.clamav.net (IP: 130.59.113.36)
 nov. 25 11:23:12 pandan freshclam[7558]: WARNING: Clamd was NOT notified: Can't connect to clamd through /var/run/clamav/clamd.ctl: No such file or directory
-root@pandan:/home/aker# 
+
 
 
