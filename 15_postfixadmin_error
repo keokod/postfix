@@ -1,0 +1,48 @@
+#aller à 
+https://localhost/postfixadmin
+
+#modifier le type de base:
+/usr/share/postfixadmin# nano config.inc.php
+$CONF['database_type'] = 'mysqli';//$dbtype;
+
+#aller à :
+https://localhost/postfixadmin/setup.php
+
+#donner les doits à apache 
+/usr/share/postfixadmin# chown -R www-data:www-data templates_c
+
+
+Postfix Admin Setup Checker
+
+Running software:
+
+    PHP version 7.0.19-1
+    Apache/2.4.25 (Debian)
+
+Checking for dependencies:
+
+    Magic Quotes: Disabled - OK
+    Depends on: presence config.inc.php - OK
+    Checking $CONF['configured'] - OK
+    Smarty template compile directory is writable - OK
+    Depends on: MySQL 4.1 - OK
+    Testing database connection - OK - mysqli://postfixadmin:xxxxx@localhost/postfixadmin
+    Depends on: session - OK
+    Depends on: pcre - OK
+    Depends on: multibyte string - OK
+    Depends on: IMAP functions - OK
+
+Everything seems fine... attempting to create/update database structure
+
+Updating database:
+
+- old version: 0; target version: 1835
+  (If the update doesn't work, run setup.php?debug=1 to see the detailed error messages and SQL queries.)
+
+updating to version 1 (MySQL)...
+
+DEBUG INFORMATION:
+Invalid query: Specified key was too long; max key length is 1000 bytes
+
+Check your error_log for the failed query. 
+
