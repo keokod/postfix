@@ -8,3 +8,29 @@ nano /etc/postfix/master.cf
 #install dovecot
 apt-get install dovecot-imapd dovecot-pop3d dovecot-mysql dovecot-lmtpd
 
+#editer
+nano /etc/dovecot/dovecot-mysql.conf.ext
+
+#editer
+/etc/dovecot/conf.d/10-auth.conf
+disable_plaintext_auth = no 
+auth_mechanisms = plain login
+
+#!include auth-deny.conf.ext
+#!include auth-master.conf.ext
+
+#!include auth-system.conf.ext
+!include auth-sql.conf.ext
+#!include auth-ldap.conf.ext
+#!include auth-passwdfile.conf.ext
+#!include auth-checkpassword.conf.ext
+#!include auth-vpopmail.conf.ext
+#!include auth-static.conf.ext
+
+nano 10-mail.conf 
+#editer modifier juste cette ligne
+mail_location = maildir:/home/vmail/%d/%n:INDEX=/home/vmail/%d/%n/indexes
+
+#editer
+nano 10-ssl.conf 
+ssl = yes #mettre ssl à yes
