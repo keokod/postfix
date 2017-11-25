@@ -1,0 +1,25 @@
+systemctl restart dovecot
+systemctl restart postfix
+/etc/dovecot/conf.d# systemctl status dovecot
+
+● dovecot.service - Dovecot IMAP/POP3 email server
+   Loaded: loaded (/lib/systemd/system/dovecot.service; enabled; vendor preset: enabled)
+   Active: active (running) since Sat 2017-11-25 01:41:33 CET; 1min 18s ago
+     Docs: man:dovecot(1)
+           http://wiki2.dovecot.org/
+  Process: 3454 ExecStop=/usr/bin/doveadm stop (code=exited, status=0/SUCCESS)
+  Process: 3459 ExecStart=/usr/sbin/dovecot (code=exited, status=0/SUCCESS)
+ Main PID: 3460 (dovecot)
+    Tasks: 4 (limit: 4915)
+   CGroup: /system.slice/dovecot.service
+           ├─3460 /usr/sbin/dovecot
+           ├─3461 dovecot/anvil
+           ├─3462 dovecot/log
+           └─3464 dovecot/config
+
+nov. 25 01:41:33 pandan systemd[1]: Starting Dovecot IMAP/POP3 email server...
+nov. 25 01:41:33 pandan dovecot[3460]: master: Dovecot v2.2.27 (c0f36b0) starting up for imap, lmtp, pop3 (core dumps 
+nov. 25 01:41:33 pandan systemd[1]: dovecot.service: Failed to read PID from file /var/run/dovecot/master.pid: Invalid
+nov. 25 01:41:33 pandan systemd[1]: Started Dovecot IMAP/POP3 email server.
+
+
