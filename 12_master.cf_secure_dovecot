@@ -64,5 +64,23 @@ userdb {
   args = /etc/dovecot/dovecot-mysql.conf.ext #ajouter my
 }
 
+nano 10-master.conf
+
+
+service lmtp {
+  unix_listener /var/spool/postfix/private/dovecot-lmtp {
+    mode = 0666
+    user = postfix
+    group = postfix
+  }
+
+  # Create inet listener only if you can't use the above UNIX socket
+  #inet_listener lmtp {
+    # Avoid making LMTP visible for the entire internet
+    #address =
+    #port = 
+  #}
+}
+
 
 
